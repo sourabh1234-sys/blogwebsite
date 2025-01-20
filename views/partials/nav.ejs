@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <img src="../assest/logo-search-grid-1x-removebg-preview.png" height="45" width="60" class="d-inline-block align-top me-2">
+      <img src="https://gitpriv.s3.us-east-1.amazonaws.com/logo-search-grid-1x.png" height="45" width="60" class="d-inline-block align-top me-2">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
         <% if (locals.user) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="<%= locals.user.avatar || '/images/default.png' %>" alt="User Avatar" class="rounded-circle me-2" width="30" height="30">
+              <img src="<%= locals.user.avatar || 'https://gitpriv.s3.us-east-1.amazonaws.com/image.png' %>" alt="User Avatar" class="rounded-circle me-2" width="30" height="30">
               <%= locals.user.name %>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
