@@ -14,8 +14,6 @@ router.get('/signup', (req, res) => {
 router.get('/', async (req, res) => {
     const allblog = await Blog.find({}); 
 
-    console.log(req.user.id);  
-    console.log(req.user);  
     return res.render('home', {
         user: req.user,
         blogs: allblog, 
