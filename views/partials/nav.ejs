@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="../assest/logo-search-grid-1x-removebg-preview.png" height="45" width="60" class="d-inline-block align-top me-2">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link <%= locals.active === 'home' ? 'active' : '' %>" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <%= locals.active === 'categories' ? 'active' : '' %>" href="/error">Categories</a>
+        </li>
+        <% if (locals.user) { %>
+          <li class="nav-item">
+            <a class="nav-link <%= locals.active === 'addblog' ? 'active' : '' %>" href="/blog/addblog">New Post</a>
+          </li>
+        <% } %>
+      </ul>
+      <ul class="navbar-nav">
+        <% if (locals.user) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="<%= locals.user.avatar || '/images/default.png' %>" alt="User Avatar" class="rounded-circle me-2" width="30" height="30">
+              <%= locals.user.name %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="/user/userprofile">Profile</a></li>
+              <li><a class="dropdown-item" href="/setting">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
+            </ul>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary me-2" href="/signin">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary text-white" href="/signup">Sign Up</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<% if (locals.error) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= locals.error %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>

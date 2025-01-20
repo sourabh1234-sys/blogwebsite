@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/header') %>
+    <title>Account Settings | YourBlogName</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+        .settings-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .form-check {
+            margin-bottom: 15px;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container">
+        <div class="settings-container">
+            <h1 class="text-center mb-4">Account Settings</h1>
+
+            <!-- Profile Information -->
+            <section class="mb-5">
+                <h2 class="section-title">Profile Information</h2>
+                <form action="/user/update-profile" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profileImage" class="form-label">Profile Image</label>
+                        <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </section>
+
+            <!-- Change Password -->
+            <section class="mb-5">
+                <h2 class="section-title">Change Password</h2>
+                <form action="/user/change-password" method="POST">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
+            </section>
+
+            <!-- Privacy Settings -->
+            <section class="mb-5">
+                <h2 class="section-title">Privacy Settings</h2>
+                <form action="/user/update-privacy" method="POST">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="hideAllBlogs" name="hideAllBlogs" <%= user.hideAllBlogs ? 'checked' : '' %>>
+                        <label class="form-check-label" for="hideAllBlogs">Hide all my blogs from public view</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="makeProfilePrivate" name="makeProfilePrivate" <%= user.makeProfilePrivate ? 'checked' : '' %>>
+                        <label class="form-check-label" for="makeProfilePrivate">Make my profile private</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Privacy Settings</button>
+                </form>
+            </section>
+
+            <!-- Notification Preferences -->
+            <section class="mb-5">
+                <h2 class="section-title">Notification Preferences</h2>
+                <form action="/user/update-notifications" method="POST">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="emailNotifications" name="emailNotifications" <%= user.emailNotifications ? 'checked' : '' %>>
+                        <label class="form-check-label" for="emailNotifications">Receive email notifications</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="commentNotifications" name="commentNotifications" <%= user.commentNotifications ? 'checked' : '' %>>
+                        <label class="form-check-label" for="commentNotifications">Notify me of new comments on my blogs</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Notification Preferences</button>
+                </form>
+            </section>
+
+            <!-- Delete Account -->
+            <section class="mb-5">
+                <h2 class="section-title">Delete Account</h2>
+                <p class="text-danger">Warning: This action is irreversible. All your data will be permanently deleted.</p>
+                <form action="/user/delete-account" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                    <div class="mb-3">
+                        <label for="deleteConfirmation" class="form-label">Type "DELETE" to confirm</label>
+                        <input type="text" class="form-control" id="deleteConfirmation" name="deleteConfirmation" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete My Account</button>
+                </form>
+            </section>
+        </div>
+    </div>
+    <%- include('./partials/scripts') %>
+    <script>
+        // Client-side validation for password change
+        document.querySelector('form[action="/user/change-password"]').addEventListener('submit', function(e) {
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+            if (newPassword !== confirmPassword) {
+                e.preventDefault();
+                alert('New passwords do not match. Please try again.');
+            }
+        });
+
+        // Client-side validation for account deletion
+        document.querySelector('form[action="/user/delete-account"]').addEventListener('submit', function(e) {
+            var confirmation = document.getElementById('deleteConfirmation').value;
+            if (confirmation !== 'DELETE') {
+                e.preventDefault();
+                alert('Please type "DELETE" to confirm account deletion.');
+            }
+        });
+    </script>
+</body>
+</html>
