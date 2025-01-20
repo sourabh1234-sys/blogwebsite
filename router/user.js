@@ -16,7 +16,7 @@ router.post('/signup', async (req, res) => {
         return res.status(500).send("Internal Server Error");
     }
 })
-
+          
 router.post('/signin', async (req, res) => {
     try {
         const { email, password } = req.body

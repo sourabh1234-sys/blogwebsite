@@ -1,21 +1,22 @@
 const {tokenvaild} = require('../services/auth')
 
-
+  
 function checkauthenticationcookie(cookie) {
-    return (req , res , next) => {
-        const cookievalue = req.cookies[cookie]
-        if(!cookievalue)  return next();
+    return (req, res, next) => {
+        const cookievalue = req.cookies[cookie];
+        if (!cookievalue) return next();
 
         try {
-            const payload = tokenvaild(cookievalue)
-            req.user = payload
+            const payload = tokenvaild(cookievalue);
+            req.user = payload;  
         } catch (error) {
             console.log(error);
-            
         }
+
         return next();
     }
 }
+
 
 function Checkpermission(cookie){
     return (req , res , next) => {
@@ -28,7 +29,7 @@ function Checkpermission(cookie){
         next();
     }
 }
-
+   
 module.exports = {
     checkauthenticationcookie,
     Checkpermission

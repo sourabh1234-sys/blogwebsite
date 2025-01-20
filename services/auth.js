@@ -10,7 +10,7 @@ function createtoken(user) {
     }
 
     const token = jwt.sign(payload , secret)
-    return token
+    return token 
     
 }
 

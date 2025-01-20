@@ -63,6 +63,15 @@
             </form>
         </div>
     </div>
-   <%- include('./partials/scripts') %>
+
+    <%- include('./partials/scripts') %>
+
+    <!-- This script will handle the alert message in the browser -->
+    <script>
+        if (window.location.search.includes("error")) {
+            alert("You cannot access this page without logging in or signing up.");
+            window.location.href = '/signup'
+        }
+    </script>
 </body>
 </html>
